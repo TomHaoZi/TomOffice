@@ -70,9 +70,12 @@ Liquid Glass 相关选项面板。
 
 ## 立即使用（Windows）
 
-- **安装包**：若本地已构建，双击 `release/Tom-Office-Setup-0.3.0.exe`（`release/` 默认不入库）。
-- **免安装**：双击项目根目录 `启动 Tom Office.cmd`，或运行 `release/win-unpacked/Tom Office.exe`（须保留完整 `win-unpacked` 文件夹，不能只复制单个 EXE）。
-- 支持 **Windows 10/11 x64**。未做商业代码签名时，系统可能提示发布者未知。
+- **发行版下载（推荐）**：[Tom Office v0.3.0 Release](https://github.com/Tomhao10225101490/TomOffice/releases/tag/v0.3.0)
+  - 安装包：[Tom-Office-Setup-0.3.0.exe](https://github.com/Tomhao10225101490/TomOffice/releases/download/v0.3.0/Tom-Office-Setup-0.3.0.exe)（Windows x64 NSIS）
+  - 校验和：[SHA256SUMS.txt](https://github.com/Tomhao10225101490/TomOffice/releases/download/v0.3.0/SHA256SUMS.txt)
+- **本地已构建时**：也可双击 `release/Tom-Office-Setup-0.3.0.exe`（该目录默认不入库）。
+- **免安装（仅本地构建产物）**：双击项目根目录 `启动 Tom Office.cmd`，或运行 `release/win-unpacked/Tom Office.exe`（须保留完整 `win-unpacked` 文件夹，不能只复制单个 EXE）。
+- 支持 **Windows 10/11 x64**。安装包未做商业代码签名，系统可能提示发布者未知 / SmartScreen。
 
 `启动 Tom Office.cmd`：优先启动 `release\win-unpacked\Tom Office.exe`；否则需已有 `dist\index.html` 后执行 `npm start`。
 
