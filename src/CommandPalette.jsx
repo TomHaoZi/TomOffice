@@ -1,0 +1,11 @@
+import React, { useState } from 'react';
+import { Search, CornerDownLeft, ArrowUp, ArrowDown, Command, FileText } from 'lucide-react';
+import { Modal, FileIcon } from './ui';
+export default function CommandPalette({ actions, files, onSelect, onClose }) {
+  const [query, setQuery] = useState(''), [index, setIndex] = useState(0);
+  const commands = actions.filter(a => a.label.toLowerCase().includes(query.toLowerCase()));
+  const docs = files.filter(f => f.name.toLowerCase().includes(query.toLowerCase())).sort((a, b) => b.modified - a.modified).slice(0, 7);
+  const results = [...commands, ...docs.map(f => ({ label: f.name, type: f.type, action: () => onSelect(f.id), hint: '打开文档' }))];
+  const run = item => { if (item) { onClose(); item.action(); } };
+  return <Modal title="快捷操作" onClose={onClose} wide><div className="command-palette"><div className="command-search"><Search size={21}/><input autoFocus placeholder="想做些什么？搜索操作或文档…" aria-label="快捷操作搜索" value={query} onChange={e => { setQuery(e.target.value); setIndex(0); }} onKeyDown={e => { if (e.key === 'ArrowDown') { e.preventDefault(); setIndex(v => Math.min(results.length - 1, v + 1)); } if (e.key === 'ArrowUp') { e.preventDefault(); setIndex(v => Math.max(0, v - 1)); } if (e.key === 'Enter') { e.preventDefault(); run(results[index]); } }}/><kbd>ESC</kbd></div><div className="command-results">{results.length ? results.map((item, i) => <React.Fragment key={i}>{i === 0 && <div className="command-group-label">{commands.length ? '常用操作' : '你的文档'}</div>}{i === commands.length && i !== 0 && <div className="command-group-label">你的文档</div>}<button className={i === index ? 'selected' : ''} onMouseEnter={() => setIndex(i)} onClick={() => run(item)}>{item.type ? <FileIcon type={item.type}/> : <span className="command-icon">{item.icon ? <item.icon size={18}/> : <Command size={18}/>}</span>}<span>{item.label}</span><small>{item.hint}</small>{i === index && <CornerDownLeft size={15}/>}</button></React.Fragment>) : <div className="command-empty"><Search size={26}/><p>没有找到匹配的操作或文档</p></div>}</div><div className="command-footer"><span><ArrowUp size={12}/><ArrowDown size={12}/>切换操作</span><span><CornerDownLeft size={12}/>确认选择</span><span>让效率，多一点从容。</span></div></div></Modal>;
+}
